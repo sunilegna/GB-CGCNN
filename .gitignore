@@ -1,0 +1,7 @@
+__pycache__
+dataset
+GBCGCNN-MIT
+lightning_logs
+test_results
+wandb
+*.ipynb

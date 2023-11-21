@@ -1,0 +1,35 @@
+{
+  "data_path" : "./dataset/MIT",
+  "random_seed" : 240,
+  "n_folds" : 10,
+  "disable_cuda" : false,
+  "workers" : 0,
+  "batch_size" : 512,
+  "lr" : 0.001,
+  "lr_milestones" : [20,40,60],
+  "momentum" : 0.9,
+  "weight_decay" : 0,
+  "resume_path" : null,
+  "train_ratio" : 0.9,
+  "val_ratio" : 0.1,
+  "optim" : "Adam",
+  "gpu_num" : 1,
+
+  "model" : {
+    "atom_fea_len" : 64,
+    "h_fea_len" : 128,
+    "epochs" : 70,
+  },
+
+  "ensemble" : {
+    "method" : "gb",
+    "boosting_rate" : 0.25,
+    "num_stages" : 11,
+  },
+
+  "wandb": {
+      "wandb_on": True, 
+      "project":"GBCGCNN-MIT", 
+      "group":"standard"
+  }
+}
