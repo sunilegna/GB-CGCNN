@@ -1,0 +1,35 @@
+[tool.poetry]
+name = "gb-cgcnn"
+version = "0.1.0"
+description = "Gradient Boosting CGCNN"
+authors = ["Eunho <eunhkim@postech.ac.kr>"]
+readme = "README.md"
+
+[[tool.poetry.source]]
+name = "torch_geometric"
+url = "https://data.pyg.org/whl/torch-2.0.0+cu117.html"
+priority = "primary"
+
+[[tool.poetry.source]]
+name = "PyPI"
+priority = "default"
+
+[tool.poetry.dependencies]
+python = "<3.11,>=3.9"
+torch = "2.0.0"
+lightning = "^2.0.4"
+pandas = "^2.0.3"
+pymatgen = "2023.7.20"
+torch-geometric = "2.3.1"
+torch-scatter = {version = "2.1.1+pt20cu117", source = "torch_geometric"}
+torch-sparse = {version = "0.6.17+pt20cu117", source = "torch_geometric"}
+torch-cluster = {version = "1.6.1+pt20cu117", source = "torch_geometric"}
+torch-spline-conv = {version = "1.2.2+pt20cu117", source = "torch_geometric"}
+wandb = "^0.15.0"
+scikit-learn = "1.2.2"
+tqdm = "^4.65.0"
+imbalanced-learn = "0.10.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
