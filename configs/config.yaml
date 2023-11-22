@@ -1,5 +1,6 @@
 {
   "data_path" : "./dataset/MIT",
+  "r_cut" : 8,
   "random_seed" : 240,
   "n_folds" : 10,
   "disable_cuda" : false,
