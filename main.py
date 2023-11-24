@@ -85,7 +85,7 @@ class Trainer(pl.LightningModule):
     
 def train(config):
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
-    dataset = CIFData(config["data_path"], random_seed = config["random_seed"], radius = config["r_cut"])
+    dataset = CIFData(config["data_path"], random_seed = config["random_seed"], radius = config["r_cut"], max_num_nbr = config["max_num_nbr"])
 
     k_folds = config["n_folds"]
     kfold = StratifiedKFold(n_splits=k_folds, shuffle=True, random_state=config["random_seed"])

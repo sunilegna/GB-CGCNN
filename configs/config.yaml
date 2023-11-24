@@ -1,6 +1,6 @@
 {
   "data_path" : "./dataset/MIT",
-  "r_cut" : 8,
+  "r_cut" : 7,
   "random_seed" : 240,
   "n_folds" : 10,
   "disable_cuda" : false,
@@ -18,7 +18,6 @@
 
   "model" : {
     "atom_fea_len" : 64,
-    "h_fea_len" : 128,
     "epochs" : 70,
   },
 
