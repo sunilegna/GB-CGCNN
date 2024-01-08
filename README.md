@@ -14,3 +14,8 @@ conda activate gb
 pip install poetry
 poetry install
 ```
+
+3. Training code
+```
+python main.py
+```
