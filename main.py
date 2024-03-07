@@ -85,7 +85,7 @@ class Trainer(pl.LightningModule):
     
 def train(config):
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
-    dataset = CIFData(config["data_path"], random_seed = config["random_seed"], radius = config["r_cut"])
+    dataset = CIFData(config["data_path"], random_seed = config["random_seed"], radius = config["r_cut"], max_num_nbr = config["max_num_nbr"])
 
     k_folds = config["n_folds"]
     kfold = StratifiedKFold(n_splits=k_folds, shuffle=True, random_state=config["random_seed"])
@@ -99,8 +99,14 @@ def train(config):
     X = [dataset[i][0] for i in tqdm(range(N))]
     y = [dataset[i][1].tolist() for i in range(N)]
     
-    for fold, (train_ids, test_ids) in enumerate(kfold.split(X, y)):        
-        c0 = init_gbnn(np.array(y)[train_ids])
+    for fold, (train_ids, test_ids) in enumerate(kfold.split(X, y)):   
+        mean_value = init_gbnn(np.array(y)[train_ids])  
+        if config['ensemble']['c0'] == 'auto':  
+            c0 = mean_value
+        else:
+            c0 = config['ensemble']['c0']
+
+        print(f"c0:{c0}")
         
         train_sampler = torch.utils.data.SubsetRandomSampler(train_ids)
         test_sampler = torch.utils.data.SubsetRandomSampler(test_ids)
@@ -124,7 +130,7 @@ def train(config):
         
         for stage in range(config["ensemble"]["num_stages"]):
             t0 = time.time()
-            seed_everything(config["random_seed"], workers=True)
+            seed_everything(config["training_seed"], workers=True)
             trainer = Trainer(config, orig_atom_fea_len, nbr_fea_len, net_ensemble)
             trainer.fit(train_loader)
             net_ensemble.add(trainer.gb.model)
@@ -150,7 +156,7 @@ def train(config):
             
             if best_fscore < fscore_te:
                 best_fscore = fscore_te
-                class_eval(net_ensemble, test_loader, to_file=name+"_best")
+                class_eval(net_ensemble, test_loader, to_file=config["wandb"]["group"]+"_"+name+"_best")
     
         
 if __name__ == "__main__":

@@ -1,7 +1,9 @@
 {
   "data_path" : "./dataset/MIT",
-  "r_cut" : 8,
+  "r_cut" : 7,
+  "max_num_nbr" : 10,
   "random_seed" : 240,
+  "training_seed": 422,
   "n_folds" : 10,
   "disable_cuda" : false,
   "workers" : 0,
@@ -25,7 +27,8 @@
   "ensemble" : {
     "method" : "gb",
     "boosting_rate" : 0.25,
-    "num_stages" : 11,
+    "num_stages" : 12,
+    "c0":'auto'
   },
 
   "wandb": {

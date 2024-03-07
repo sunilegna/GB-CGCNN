@@ -24,7 +24,7 @@ class CGConv(nn.Module):
         self.softplus2 = nn.Softplus()
         
     def forward(self, x, edge_index, edge_attr):
-        N, M = edge_index.shape
+        # N, M = edge_index.shape
         xi = x[edge_index[0]]
         xj = x[edge_index[1]]
         
@@ -37,7 +37,7 @@ class CGConv(nn.Module):
         nbr_core = self.softplus1(nbr_core)
         
         nbr_message = nbr_filter * nbr_core
-        nbr_sumed = scatter(nbr_message, edge_index[0], dim=0, reduce='sum')        
+        nbr_sumed = scatter(nbr_message, edge_index[0], dim=0, reduce='sum')
         nbr_sumed = self.bn2(nbr_sumed)
         return nbr_sumed
         
@@ -50,6 +50,7 @@ class GbGraphConvNet(nn.Module):
         self.GA = AttentionalAggregation(self.attention_nn)     
         self.fc_out = nn.Linear(atom_fea_len, 1)
         self.softplus = nn.Softplus()
+        self.dropout = nn.Dropout(p=0.2)
         self.silu = nn.SiLU()
 
     def forward(self, graphs, lower_f):
@@ -58,7 +59,8 @@ class GbGraphConvNet(nn.Module):
             atom_fea = atom_fea + lower_f
         atom_fea = self.conv(atom_fea, graphs.edge_index, graphs.edge_attr)
         atom_fea_ = self.silu(atom_fea)
-        crys_fea = self.GA(atom_fea_, graphs.batch)           
+        crys_fea = self.GA(atom_fea_, graphs.batch)  
+        # crys_fea = self.dropout(crys_fea)           
         crys_fea = self.fc_out(crys_fea)
               
         return atom_fea, crys_fea
