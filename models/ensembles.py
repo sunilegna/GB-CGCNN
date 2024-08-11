@@ -54,7 +54,7 @@ class BoostingNet(object):
         d = torch.load(path)
         net = BoostingNet(d['c0'])
         for stage, m in enumerate(d['models'][:num_stage]):
-            submod = base_model.get_model(orig_atom_fea_len, nbr_fea_len, stage, args)
+            submod = base_model.get_model(orig_atom_fea_len, nbr_fea_len, args)
             submod.load_state_dict(m)
             net.add(submod)
         return net

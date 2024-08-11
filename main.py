@@ -123,10 +123,11 @@ def train(config):
         
         net_ensemble = BoostingNet(c0)
         name = f"cv{fold}"
+        group = config["wandb"]["group"]
         config["wandb"]["name"] = name
         best_fscore = 0.
         if config["wandb"]['wandb_on']:
-            wandb.init(project="GBCGCNN-MIT", name=config["wandb"]["name"], reinit=True, group=config["wandb"]["group"])
+            wandb.init(project="GBCGCNN-MIT", name=config["wandb"]["name"], reinit=True, group=group)
         
         for stage in range(config["ensemble"]["num_stages"]):
             t0 = time.time()
@@ -157,6 +158,13 @@ def train(config):
             if best_fscore < fscore_te:
                 best_fscore = fscore_te
                 class_eval(net_ensemble, test_loader, to_file=config["wandb"]["group"]+"_"+name+"_best")
+        
+        folder_path = f'saved/{group}'
+        if not os.path.exists(folder_path):
+            os.makedirs(folder_path)
+                  
+        out_file = f'{folder_path}/{name}.pth' 
+        net_ensemble.to_file(out_file)
     
         
 if __name__ == "__main__":
