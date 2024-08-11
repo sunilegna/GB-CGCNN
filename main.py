@@ -85,7 +85,16 @@ class Trainer(pl.LightningModule):
     
 def train(config):
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
-    dataset = CIFData(config["data_path"], random_seed = config["random_seed"], radius = config["r_cut"], max_num_nbr = config["max_num_nbr"])
+    dataset_path = config["data_path"]
+    dataset_tar_file = dataset_path + ".tar"
+    if not os.path.exists(dataset_path) and os.path.exists(dataset_tar_file):
+        import tarfile
+        print(f"Initalizing dataset from {os.path.abspath(dataset_tar_file)}")
+        print(f"Unpacking dataset to {os.path.abspath(dataset_path)} ...")
+        with tarfile.open(dataset_tar_file, "r") as tar:
+            tar.extractall(path=dataset_path)
+        print("Done!")
+    dataset = CIFData(dataset_path, random_seed = config["random_seed"], radius = config["r_cut"], max_num_nbr = config["max_num_nbr"])
 
     k_folds = config["n_folds"]
     kfold = StratifiedKFold(n_splits=k_folds, shuffle=True, random_state=config["random_seed"])

@@ -1,4 +1,6 @@
-# GB-CGCNN
+# boosting-CGCNN
+
+Implementation codes for Boosting-Crystal Graph Convolutional Neural Network (Boosting-CGCNN).
 
 ## Installation
 
@@ -11,6 +13,7 @@ conda activate gb
 
 2. Install dependencies
 ```
+git clone https://github.com/sunilegna/GB-CGCNN.git
 pip install poetry
 poetry install
 ```
