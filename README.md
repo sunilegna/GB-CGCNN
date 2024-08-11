@@ -2,6 +2,10 @@
 
 Implementation codes for Boosting-Crystal Graph Convolutional Neural Network (Boosting-CGCNN).
 
+<p align="center">
+  <img src="assets/Fig-1.png" alt="Overview" width="600"/>
+</p>
+
 ## Installation
 
 1. Make a conda environment
