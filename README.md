@@ -3,7 +3,7 @@
 Implementation codes for Boosting-Crystal Graph Convolutional Neural Network (Boosting-CGCNN).
 
 <p align="center">
-  <img src="assets/Fig-1.png" alt="Overview" width="600"/>
+  <img src="assets/Fig-1.png" alt="Overview" width="450"/>
 </p>
 
 ## Installation
