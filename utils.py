@@ -9,7 +9,7 @@ from imblearn.metrics import geometric_mean_score
 
 from sklearn.metrics import roc_curve
 from sklearn.metrics import auc
-from glob import glob
+import os
 
 #grownet
 def init_gbnn(y):
@@ -92,7 +92,11 @@ def class_eval(net_ensemble, data_loader, to_file=False, single=None):
     if to_file is not False:
         star_label = '**'
         import csv
-        with open(f'test_results/test_results_{to_file}.csv', 'w') as f:
+        output_dir = 'test_results'
+        if not os.path.exists(output_dir):
+            os.makedirs(output_dir)
+            
+        with open(f'{output_dir}/test_results_{to_file}.csv', 'w') as f:
             writer = csv.writer(f)
             for cif_id, target, pred, prob in zip(test_cif_ids, y_true,
                                             y_pred, y_prob):
